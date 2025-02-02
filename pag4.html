@@ -46,34 +46,66 @@
             text-decoration: underline;
             color: #ffffff
         }
-   table {
-            border-collapse: collapse;
-            width: 100%;
+   nav {
+            background-color: #333; /* Color de fondo */
+            padding: 10px;
+        }
+ 
+        ul {
+            list-style: none;
             margin: 0;
+            padding: 0;
+            display: flex; /* Alinea los elementos en fila */
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
+ 
+        li {
+            margin: 0 15px;
         }
-        th {
-            background-color: #f4f4f4;
-            font-weight: bold;
+ 
+        a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            padding: 10px 15px;
+            display: block;
+        }
+ 
+        a:hover {
+            background-color: #555; /* Cambio de color al pasar el cursor */
+            border-radius: 5px;
         }
       
-  
+        .boton-dorado {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            text-align: center;
+        }
+
+        .boton-dorado:hover {
+            background: linear-gradient(45deg, #FFA500, #FFD700);
+            transform: scale(1.1);
+        }
     
 </style>
-</head>
 <body>
- <table border="1">
-        <tr>
-            <td><a href="https://www.example1.com" target="_blank">Conoce más sobre las criptomonedas</a></td>
-            <td><a href="https://www.example2.com" target="_blank">Guia para principiantes</a></td>
-            <td><a href="https://www.example3.com" target="_blank">Opiniones de nuestros clientes</a></td>
-            <td><a href="https://www.example4.com" target="_blank">Formulario</a></td>
-        </tr>
-    </table>
+<nav>
+<ul>
+<li><a href="index.html">Inicio</a></li>
+<li><a href="nosotros.html">Funcionamiento del mercado</a></li>
+<li><a href="servicios.html">Iniciación</a></li>
+<li><a href="pag4.html">Opiniones de nuestros clientes</a></li>
+  <li><a href="contacto.html">Formulario</a></li>
+</ul>
+</nav>
     <section>
   <h2>Opiniones de nuestros clientes</h2>
 </section>
