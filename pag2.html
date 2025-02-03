@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRYPTO MASTER</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2e2d2d;
+            color: #ffffff;
+            text-align: center;
+        }
+ 
+        header {
+            background-color: #c3c306;
+            color: ffffff;
+            padding: 1rem;
+        }
+ 
+        h1 {
+            margin: 0;
+        }
+ 
+        section {
+            padding: 2rem;
+        }
+ 
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+  canvas {
+      max-width: 100%;
+    }
+ 
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+ 
+        a:hover {
+            text-decoration: underline;
+            color: #ffffff
+        }
+
+        /* Estilos del menú */
+        nav {
+            background-color: #333; /* Color de fondo */
+            padding: 10px;
+        }
+ 
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Alinea los elementos en fila */
+        }
+ 
+        li {
+            margin: 0 15px;
+        }
+ 
+        a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            padding: 10px 15px;
+            display: block;
+        }
+ 
+        a:hover {
+            background-color: #555; /* Cambio de color al pasar el cursor */
+            border-radius: 5px;
+        }
+
+      
+        .boton-dorado {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            text-align: center;
+        }
+
+        .boton-dorado:hover {
+            background: linear-gradient(45deg, #FFA500, #FFD700);
+            transform: scale(1.1);
+        }
+  table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+    
+</style>
+</head>
+  <body>
+ 
+    <!-- Menú de navegación -->
+<nav>
+<ul>
+<li><a href="index.html">Inicio</a></li>
+<li><a href="nosotros.html">Funcionamiento del mercado</a></li>
+<li><a href="servicios.html">Iniciación</a></li>
+<li><a href="contacto.html">Opiniones de nuestros clientes</a></li>
+  <li><a href="contacto.html">Formulario</a></li>
+</ul>
+</nav>
+  
+  <h2>Funcionamiento del mercado</h2>
+  <p>Ahora aprendamos sobre como funciona el mercado de las criptomonedas. Este gráfico presenta la evolución en tiempo real del valor de Bitcoin (BTC), Ethereum (ETH) y Litecoin(LTC) en dólares estadounidenses.</p>
+   <p>Estas criptomonedas lideran el mercado. A través de esta visualización, podrás seguir de cerca las fluctuaciones de sus precios, lo que permite una comprensión más precisa de las dinámicas del mercado de criptomonedas.</p>
+  <p>¡Mantente al tanto de las últimas tendencias y movimientos de estos activos digitales! </p>
+ 
+  <h1>Gráfico de Precios en Tiempo Real de Criptomonedas</h1>
+  <canvas id="cryptoChart" width="400" height="200"></canvas>
+  <section>
+  <script src="script.js"></script>
+   <a href="https://www.ejemplo.com" class="boton-dorado">Aprende a invertir!</a>
+  </section>
+<script>
+  // Referencia al canvas donde se dibuja el gráfico
+const ctx = document.getElementById('cryptoChart').getContext('2d');
+
+// Datos iniciales del gráfico
+const data = {
+  labels: [], // Tiempos (se actualizarán dinámicamente)
+  datasets: [
+    {
+      label: 'Bitcoin (USD)',
+      data: [],
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      fill: false,
+      tension: 0.1
+    },
+    {
+      label: 'Ethereum (USD)',
+      data: [],
+      borderColor: 'rgb(54, 162, 235)',
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      fill: false,
+      tension: 0.1
+    },
+    {
+      label: 'Litecoin (USD)',
+      data: [],
+      borderColor: 'rgb(75, 192, 192)',
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      fill: false,
+      tension: 0.1
+    },
+    
+  ]
+};
+
+// Configuración del gráfico
+const config = {
+  type: 'line',
+  data: data,
+  options: {
+    responsive: true,
+    scales: {
+      x: {
+        type: 'linear',
+        position: 'bottom',
+        ticks: {
+          autoSkip: true
+        }
+      },
+      y: {
+        beginAtZero: false
+      }
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          title: function(tooltipItem) {
+            return `Tiempo: ${tooltipItem[0].label}`;
+          },
+          label: function(tooltipItem) {
+            return `${tooltipItem.dataset.label}: $${tooltipItem.raw.toFixed(2)}`;
+          }
+        }
+      }
+    }
+  }
+};
+
+// Crear el gráfico
+const cryptoChart = new Chart(ctx, config);
+
+// Función para obtener los precios y actualizar el gráfico
+const updateChart = async () => {
+  try {
+    // Obtener los precios de las criptomonedas usando la API de CoinGecko
+    const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,ripple&vs_currencies=usd');
+    
+    // Obtener los precios actuales de Bitcoin, Ethereum, Litecoin y Ripple
+    const bitcoinPrice = response.data.bitcoin.usd;
+    const ethereumPrice = response.data.ethereum.usd;
+    const litecoinPrice = response.data.litecoin.usd;
+   
+
+    // Agregar los nuevos datos al gráfico
+    const currentTime = new Date().getTime(); // Tiempo en milisegundos
+
+    // Limitar el número de puntos en el gráfico (por ejemplo, los últimos 10 minutos)
+    if (data.labels.length > 10) {
+      data.labels.shift();
+      data.datasets[0].data.shift();
+      data.datasets[1].data.shift();
+      data.datasets[2].data.shift();
+
+    }
+
+    // Agregar los nuevos puntos al gráfico
+    data.labels.push(currentTime);
+    data.datasets[0].data.push(bitcoinPrice);
+    data.datasets[1].data.push(ethereumPrice);
+    data.datasets[2].data.push(litecoinPrice);
+   
+
+    // Actualizar el gráfico
+    cryptoChart.update();
+  } catch (error) {
+    console.error("Error al obtener los precios:", error);
+  }
+};
+
+// Actualizar el gráfico cada 30 segundos
+setInterval(updateChart, 30000);
+
+// Inicializar el gráfico con los primeros datos
+updateChart();
+  </script>
+</body>
+    
+  <section>
+    <footer>
+<p>&copy; Enseñanza sobre criptomonedas - Contáctanos +34 *** ** ** **</p>
+</footer>
+  </section>
+</body>
+</html>
